@@ -59,8 +59,8 @@ export class Sketch extends SketchManager {
   init() {
     this.disableOrbitControls();
 
-    this.setCameraPos(0, 5, 40);
-    this.lookAt(0, 5, 0);
+    this.setCameraPos(0, 0, 40);
+    this.lookAt(0, 15, 0);
 
     this.setClearColor(0x000000);
 
@@ -73,16 +73,11 @@ export class Sketch extends SketchManager {
     this.audio.volume(1)
 
     this.scene.add(this.skyBox.group)
-    this.scene.add(this.text.group)
+    // this.scene.add(this.text.group)
     this.scene.add(this.dots.mesh)
     this.scene.add(this.comics.group)
     this.scene.add(this.lines.mesh)
-
-    this.scene.add(this.lights.directionalFrontLeft)
-    this.scene.add(this.lights.directionalFrontRight)
-    this.scene.add(this.lights.directionalTop)
-    this.scene.add(this.lights.ambient)
-    this.scene.add(this.lights.spot)
+    this.scene.add(this.lights.group)
 
     this.comics.position.set(0, OFFSET_Y, 0)
     this.skyBox.position.set(0, OFFSET_Y, 0)

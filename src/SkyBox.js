@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import utils from './utils'
 
 
 export const WIDTH = 160
@@ -11,7 +12,7 @@ export class SkyBox {
 
     this.geometry = new THREE.Geometry()
 
-    this.createFloor()
+    // this.createFloor()
     this.createBackWall()
     this.createSideWalls()
 
@@ -23,6 +24,7 @@ export class SkyBox {
       depthTest: true,
       depthWrite: true,
       alphaTest: 0,
+      side: THREE.DoubleSide,
     });
     this.mesh = new THREE.Mesh(this.geometry, this.material)
     this.mesh.receiveShadow = true
@@ -31,9 +33,9 @@ export class SkyBox {
 
   createFloor() {
     const geometry = new THREE.PlaneGeometry(WIDTH, DEPTH)
-    this.floor = new THREE.Mesh(geometry, this.material) 
-    this.floor.rotation.x = -Math.PI * 0.5
-    this.floor.updateMatrix()
+    const floor = new THREE.Mesh(geometry, this.material) 
+    floor.rotation.x = -Math.PI * 0.5
+    floor.updateMatrix()
 
     this.geometry.merge(this.floor.geometry, this.floor.matrix)
   }
@@ -50,22 +52,36 @@ export class SkyBox {
   createSideWalls() {
     const geometry = new THREE.PlaneGeometry(DEPTH, HEIGHT)
     
-    this.leftWall = new THREE.Mesh(geometry, this.material)
-    this.rightWall = this.leftWall.clone()
-
-    this.leftWall.rotateY(Math.PI * 0.5) 
-    this.leftWall.translateZ(-WIDTH / 2)
-    this.leftWall.translateY(HEIGHT / 2)
-    this.leftWall.updateMatrix()
-
-    this.rightWall.rotateY(-Math.PI * 0.5) 
-    this.rightWall.translateZ(-WIDTH / 2)
-    this.rightWall.translateY(HEIGHT / 2)
-    this.rightWall.updateMatrix()
-
+    const leftWall = new THREE.Mesh(geometry, this.material)
+    const rightWall = leftWall.clone()
+    const bottomWall = leftWall.clone()
+    const topWall = leftWall.clone()
     
-    this.geometry.merge(this.leftWall.geometry, this.leftWall.matrix)
-    this.geometry.merge(this.rightWall.geometry, this.rightWall.matrix)
+
+    leftWall.rotateY(utils.toRadians(90)) 
+    leftWall.translateZ(-WIDTH / 2)
+    leftWall.translateY(HEIGHT / 2)
+    leftWall.updateMatrix()
+
+    rightWall.rotateY(-utils.toRadians(90)) 
+    rightWall.translateZ(-WIDTH / 2)
+    rightWall.translateY(HEIGHT / 2)
+    rightWall.updateMatrix()
+
+    bottomWall.scale.set(WIDTH / HEIGHT, 3, 1)
+    bottomWall.rotateX(-utils.toRadians(90));
+    bottomWall.translateY(HEIGHT / 2);
+    bottomWall.updateMatrix();
+    
+    topWall.scale.set(WIDTH / HEIGHT, 3.5, 1)
+    topWall.rotateX(-utils.toRadians(80));
+    topWall.translateZ(HEIGHT);
+    topWall.updateMatrix();
+    
+    this.geometry.merge(leftWall.geometry, leftWall.matrix)
+    this.geometry.merge(rightWall.geometry, rightWall.matrix)
+    this.geometry.merge(bottomWall.geometry, bottomWall.matrix)
+    this.geometry.merge(topWall.geometry, topWall.matrix)
   }
 
   

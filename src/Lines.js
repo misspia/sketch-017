@@ -9,13 +9,15 @@ const getPointMultiplier = () => {
   return window.innerHeight / (2.0 * Math.tan(0.5 * 60.0 * Math.PI / 180.0))
 }
 
+const sides = Object.values(Side)
+
 export class Lines {
   constructor(context) {
     this.context = context
 
     this.numLines = context.numFrequencyNodes - context.spectrumStart.midrange
     // this.numLines = 1;
-    this.lines = []
+    this.lines = [];
 
     this.geometry = new THREE.BufferGeometry()
     this.createLines()
@@ -52,7 +54,8 @@ export class Lines {
     const { midrange } = this.context.spectrumStart
     let freqIndex = midrange
     for(let i = 0; i < this.numLines; i ++) {
-      const side = utils.randomBool() ? Side.RIGHT_SIDE : Side.LEFT_SIDE
+      // const side = utils.randomBool() ? Side.RIGHT_SIDE : Side.LEFT_SIDE
+      const side = sides[utils.randomIntBetween(0, sides.length - 1)]
       const line = new Line(freqIndex, side)
       this.lines.push(line)
 
