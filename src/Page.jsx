@@ -29,8 +29,7 @@ export default function Page() {
   }, [sketch, width, height]);
 
   useEffect(() => {
-    // if (!sketch || !isReady) {
-    if (!sketch) {
+    if (!sketch || !isReady) {
       return;
     }
     sketch.render();
@@ -38,12 +37,12 @@ export default function Page() {
 
   return (
     <>
-      {/* {
+      {
         !isReady &&
         <MediaActivator
           onClick={() => setIsReady(true)}
         />
-      } */}
+      }
       <Tooltip>{audioMeta.title}</Tooltip>
       <canvas ref={canvasRef}></canvas>
       <audio ref={audioRef} loop />

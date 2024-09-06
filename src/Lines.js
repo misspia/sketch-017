@@ -39,11 +39,11 @@ export class Lines {
         }
       }
     })
-    this.mesh = new THREE.LineSegments(this.geometry, this.material)
+    this.group = new THREE.LineSegments(this.geometry, this.material)
   }
   
   get position() {
-    return this.mesh.position
+    return this.group.position
   }
 
   onResize() {

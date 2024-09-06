@@ -33,13 +33,13 @@ export class Sketch extends SketchManager {
     this.pp = new PostProcessor(this);
     this.fftSize = 512;
 
-    this.cameraManager = new CameraManager(this)
     this.skyBox = new SkyBox(this)
     this.text = new Text(this)
     this.lights = new Lights(this)
     this.dots = new Dots(this)
     this.comics = new Comics(this)
     this.lines = new Lines(this)
+    this.cameraManager = new CameraManager(this)
 
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -57,8 +57,6 @@ export class Sketch extends SketchManager {
   }
 
   init() {
-    this.disableOrbitControls();
-
     this.setCameraPos(0, 0, 40);
     this.lookAt(0, 15, 0);
 
@@ -74,9 +72,9 @@ export class Sketch extends SketchManager {
 
     this.scene.add(this.skyBox.group)
     // this.scene.add(this.text.group)
-    this.scene.add(this.dots.mesh)
+    this.scene.add(this.dots.group)
     this.scene.add(this.comics.group)
-    this.scene.add(this.lines.mesh)
+    this.scene.add(this.lines.group)
     this.scene.add(this.lights.group)
 
     this.comics.position.set(0, OFFSET_Y, 0)
@@ -91,12 +89,13 @@ export class Sketch extends SketchManager {
     this.audio.getByteFrequencyData();
     this.beatManager.update();
     this.effectManager.update()
-    this.cameraManager.update()
-
+    
     this.dots.update()
     this.comics.update()
     this.lines.update()
     this.text.update()
+    
+    this.cameraManager.update()
 
     this.effectManager.render();
     requestAnimationFrame(() => this.draw());

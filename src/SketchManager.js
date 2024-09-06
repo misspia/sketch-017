@@ -1,9 +1,6 @@
 import * as THREE from 'three';
-import OrbitControls from 'three-orbit-controls';
 
 import { AudioManager } from './audio';
-
-const OrbitController = OrbitControls(THREE);
 
 export class SketchManager extends THREE.EventDispatcher {
   constructor(canvas, audioElement, customOptions = {}) {
@@ -54,9 +51,6 @@ export class SketchManager extends THREE.EventDispatcher {
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
     window.scene = this.scene;
-
-    this.controls = new OrbitController(this.camera, this.renderer.domElement);
-
   }
 
   clear() {}
@@ -126,9 +120,6 @@ export class SketchManager extends THREE.EventDispatcher {
   }
   setClearColor(hex) {
     this.renderer.setClearColor(hex);
-  }
-  disableOrbitControls() {
-    this.controls.enabled = false;
   }
   getUTime() {
     const deltaTime = (Date.now() - this.startTime) / 1000.0;

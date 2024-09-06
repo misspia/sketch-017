@@ -29,11 +29,11 @@ export class Dots {
         }
       }
     })
-    this.mesh = new THREE.Points(this.geometry, this.material)
+    this.group = new THREE.Points(this.geometry, this.material)
   }
 
   get position() {
-    return this.mesh.position
+    return this.group.position
   }
 
   onResize() {
